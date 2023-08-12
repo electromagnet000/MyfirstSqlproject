@@ -1,12 +1,7 @@
 
+class Authors(db.model):
+    id = db.Column("id", db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column("name", db.String, unique=True, nullable=False)
+    birth_date = db.Column("Date_of_birth", db.String)
+    death_date = db.Column("Date_of_death", db.String)
 
-class Author(db.Model):
-    __tablename__ = 'Authors'
-
-    Author_id = Column(Integer, primary_key=True)
-    Author_name = Column(String)
-    restaurant_city = Column(String)
-    famous_dish = Column(String)
-
-    def __repr__(self) -> str:
-        return f"Restaurant(restaurant_id = {self.restaurant_id}, name = {self.restaurant_name})"

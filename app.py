@@ -1,31 +1,26 @@
 import sqlalchemy
 import jinja2
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for, session, g, flash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, Table, Column, Integer, String, text, ForeignKey
-from sqlalchemy.orm import Session
+from sqlalchemy import create_engine, Table, Column, Integer, String, text, ForeignKey, insert, select, func
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy import MetaData
 
-engine = create_engine("sqlite:///library.sqlite", echo=True)
 
-with engine.connect() as conn:
-    metadata_obj = MetaData()
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/library.sqlite'
 
-    user_table = Table(
-        "user_account",
-        metadata_obj,
-        Column("id", Integer, primary_key=True),
-        Column("name", String(30)),
-        Column("fullname", String),
-    )
+engine = create_engine('sqlite:///library.sqlite')
+Base = declarative_base()
 
-    address_table = Table(
-        "address",
-        metadata_obj,
-        Column("id", Integer, primary_key=True),
-        Column("user_id", ForeignKey("user_account.id"), nullable=False),
-        Column("email_address", String, nullable=False),
-    )
 
-    metadata_obj.create_all(engine)
+
+@app.route("/add_author", methods=['GET, POST'])
+def add_author():
+    if request.method == 'POST':
+        pass
+    return render_template("add_author.html")
+
+
+
+
