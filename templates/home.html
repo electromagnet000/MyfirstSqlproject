@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+
+  <div>
+    <a href="/add_author"> would you like to add authors?</a>
+    <a href="/add_books"> would you like to add books?</a>
+  </div>
+  <div>
+     <form method="POST">
+        <input type="text" name="search_query" placeholder="Search for a book" value="{{ search_query }}">
+        <button type="submit">Search</button>
+        <select name="sort_option">
+            <option value="default">Sort by</option>
+            <option value="title_asc" {% if sort_option == 'title_asc' %}selected{% endif %}>Title (Ascending)</option>
+            <option value="title_desc" {% if sort_option == 'title_desc' %}selected{% endif %}>Title (Descending)</option>
+        </select>
+    </form>
+
+  </div>
+
+  {% if books %}
+    <ol>
+    {% for book in books %}
+        <li><h3>{{ book.title}}</h3> by {{book.author.name}}
+              <form method="POST" action="{{ url_for('delete_book', book_id=book.id) }}" onsubmit="return confirm('Are you sure you want to delete this book?');">
+            <button type="submit">Delete</button></form>
+        </li>
+    {% endfor %}
+    </ol>
+  {% endif %}
+
+  </body>
+</html>
